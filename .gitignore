@@ -1,0 +1,15 @@
+.vercel
+.env*
+/node_modules
+/.next
+/legacy
+/assets
+/downloads
+/tmp
+/work
+/.agents
+/Atlas_Academy_Days_02-30_Video_Agent_Scripts
+/Atlas_Academy_Days_02-30_Video_Agent_Scripts.zip
+/heygen-video-log.jsonl
+
+.env*

@@ -1,0 +1,19 @@
+button.gold,
+a.gold,
+.gold.link-button {
+  background: #c83d3d !important;
+  color: #fff !important;
+  border-color: #c83d3d !important;
+}
+
+button.gold:hover,
+a.gold:hover,
+.gold.link-button:hover {
+  background: #a92e2e !important;
+  color: #fff !important;
+}
+
+button.gold:disabled {
+  background: #a85f5f !important;
+  color: #fff !important;
+}

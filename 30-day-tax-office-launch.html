@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#07182d" />
+  <meta name="description" content="Course Mission Control for the 30 Day Tax Office Launch program." />
+  <title>30 Day Tax Office Launch | Atlas Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=League+Spartan:wght@600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="course-hub.css" />
+  <link rel="stylesheet" href="course-hub-fixes.css" />
+</head>
+<body>
+  <aside class="course-sidebar">
+    <a class="course-logo" href="index.html" aria-label="Return to Atlas Academy courses"><img src="assets/Atlas_Academy_Logo.png" alt="Atlas Academy" /></a>
+    <nav aria-label="Course navigation">
+      <a class="back-link" href="index.html"><span>←</span> All Courses</a>
+      <a class="active" href="#mission-control"><span>01</span> Mission Control</a>
+      <a href="#start-here"><span>02</span> Start Here</a>
+      <a href="#roadmap"><span>03</span> Course Roadmap</a>
+      <a href="#resources"><span>04</span> Downloads</a>
+    </nav>
+    <div class="academy-status" id="academyStatus">
+      <p>ACADEMY WELCOME</p>
+      <strong id="academyStatusTitle">Check your onboarding</strong>
+      <span id="academyStatusText">Your one-time Academy Welcome is tracked separately.</span>
+      <a id="academyStatusLink" href="academy-welcome.html">Open Academy Welcome</a>
+    </div>
+    <img class="tcp-logo" src="assets/tax-compliance-pro-logo-dark.webp" alt="Tax Compliance Pro" />
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div><p>30 DAY TAX OFFICE LAUNCH</p><h1>Mission Control</h1></div>
+      <div class="profile"><span>JL</span><div><strong>Jennifer</strong><small>Student</small></div></div>
+    </header>
+
+    <div class="content" id="mission-control">
+      <section class="course-hero">
+        <div class="hero-copy">
+          <span class="ready-pill">TOOLKIT CURRICULUM LOADED</span>
+          <h2>Your 30-day launch journey starts here.</h2>
+          <p>This Mission Control belongs only to the 30 Day Tax Office Launch course. Its lessons, progress, downloads, XP, and certificate remain separate from every other Atlas Academy course.</p>
+          <a class="primary-action" id="resumeCourse" href="nova-start-here.html">Start with Nova</a>
+        </div>
+        <img src="assets/30-day-tax-office-launch.png" alt="30 Day Tax Office Launch" />
+      </section>
+
+      <section class="dashboard-grid">
+        <article class="panel progress-panel">
+          <div class="panel-heading"><div><p>COURSE PROGRESS</p><h3 id="courseProgressTitle">Ready to begin</h3></div><strong id="courseProgressPercent">0%</strong></div>
+          <div class="track"><span id="courseProgressBar"></span></div>
+          <div class="progress-meta"><span id="courseMissionCount">0 of 30 daily missions complete</span><span id="courseNextMission">Start Here with Nova is next</span></div>
+        </article>
+        <article class="panel atlas-note">
+          <div class="atlas-a">A</div>
+          <div><p>MESSAGE FROM ATLAS</p><h3>“Your Academy Welcome prepared you to learn. This course prepares you to launch.”</h3></div>
+        </article>
+      </section>
+
+      <section class="start-grid" id="start-here">
+        <article class="panel start-card">
+          <div class="panel-heading"><div><p>COURSE ORIENTATION</p><h3>Start Here with Nova: Your 30-Day Launch Mission</h3></div><span class="status-pill" id="orientationStatus">READY</span></div>
+          <p class="description">Meet Nova, establish your launch target, review the toolkit-based roadmap, and set a realistic daily completion plan.</p>
+          <div class="outcomes">
+            <div><span>01</span><strong>Define your launch target</strong></div>
+            <div><span>02</span><strong>Review the 30-day roadmap</strong></div>
+            <div><span>03</span><strong>Set your completion schedule</strong></div>
+          </div>
+          <a class="start-lesson-action" href="nova-start-here.html" id="orientationAction">Begin Start Here</a>
+        </article>
+
+        <aside class="panel course-resources" id="resources">
+          <p>COURSE DOWNLOAD</p>
+          <h3>Launch Toolkit and Tracker</h3>
+          <p>Keep the source toolkit beside your daily mission tracker throughout the course.</p>
+          <a href="downloads/30-Day-Tax-Office-Launch-Toolkit.pdf" target="_blank">Open toolkit <span>PDF</span></a>
+          <a class="secondary-download" href="downloads/M0-L01_30-Day_Mission_Tracker.pdf" target="_blank">Open tracker <span>PDF</span></a>
+        </aside>
+      </section>
+
+      <section class="panel roadmap" id="roadmap">
+        <div class="panel-heading"><div><p>TOOLKIT-BASED COURSE ROADMAP</p><h3>30 daily launch missions</h3></div><span>4 phases</span></div>
+        <p class="roadmap-intro">Every mission below traces back to the 30 Day Tax Office Launch Toolkit. Complete Start Here to unlock Day 1.</p>
+        <div class="mission-roadmap" id="missionRoadmap"></div>
+      </section>
+    </div>
+  </main>
+  <script src="course-data.js"></script>
+  <script src="course-hub.js"></script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#07182d" />
+  <meta name="description" content="Explore courses and continue learning inside Atlas Academy." />
+  <title>Atlas Academy | My Courses</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=League+Spartan:wght@600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="catalog.css" />
+</head>
+<body>
+  <header class="academy-header">
+    <a class="academy-logo" href="index.html" aria-label="Atlas Academy home">
+      <img src="assets/Atlas_Academy_Logo.png" alt="Atlas Academy" />
+    </a>
+    <nav aria-label="Academy navigation">
+      <a class="active" href="#courses">My Courses</a>
+      <a href="#learning-path">Learning Path</a>
+      <a href="#achievements">Achievements</a>
+    </nav>
+    <div class="profile-chip" aria-label="Student profile">
+      <span class="avatar">JL</span>
+      <span><strong>Jennifer</strong><small>Student</small></span>
+    </div>
+  </header>
+
+  <main>
+    <section class="catalog-hero" aria-labelledby="catalog-title">
+      <div class="hero-copy">
+        <p class="eyebrow">ATLAS ACADEMY COURSE CATALOG</p>
+        <h1 id="catalog-title">What will you master next?</h1>
+        <p>Build your tax business, strengthen compliance, and sharpen your technical skills—one focused course at a time.</p>
+      </div>
+      <div class="hero-atlas" aria-hidden="true">
+        <span class="orbit orbit-one"></span>
+        <span class="orbit orbit-two"></span>
+        <img src="assets/Atlas_Academy_Logo.png" alt="" />
+      </div>
+    </section>
+
+    <section class="welcome-card" id="academy-welcome" aria-labelledby="welcome-title">
+      <div class="welcome-icon"><img src="assets/Atlas_Academy_Logo.png" alt="" /></div>
+      <div class="welcome-copy">
+        <p class="eyebrow">ONE-TIME STUDENT ONBOARDING</p>
+        <h2 id="welcome-title">Welcome to Atlas Academy</h2>
+        <p>Learn how the Academy works, meet Atlas, and set up your student workspace once. Your welcome progress follows you into every course.</p>
+        <div class="welcome-progress" aria-label="Academy Welcome progress">
+          <div class="progress-track"><span id="welcomeProgressBar" style="width:0%"></span></div>
+          <span id="welcomeProgressText">0 of 2 welcome missions complete</span>
+        </div>
+      </div>
+      <a class="welcome-button" id="welcomeButton" href="academy-welcome.html">Begin Academy Welcome <span aria-hidden="true">→</span></a>
+    </section>
+
+    <section class="course-section" id="courses" aria-labelledby="courses-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">YOUR ACADEMY</p>
+          <h2 id="courses-title">Available courses</h2>
+        </div>
+        <span class="course-count">4 course spaces</span>
+      </div>
+
+      <div class="course-grid">
+        <article class="course-card active-course">
+          <div class="course-image">
+            <img src="assets/30-day-tax-office-launch.png" alt="30 Day Tax Office Launch course badge" />
+            <span class="status available">Course ready</span>
+          </div>
+          <div class="course-body">
+            <p class="category">BUSINESS LAUNCH</p>
+            <h3>30 Day Tax Office Launch</h3>
+            <p>Build the foundation, systems, compliance, and client plan for your tax office in 30 focused days.</p>
+            <div class="progress-row"><span>Course progress</span><strong>0%</strong></div>
+            <div class="progress-track"><span style="width:0%"></span></div>
+            <a class="course-button primary" href="30-day-tax-office-launch.html">Enter course <span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-image">
+            <img src="assets/audit-playbook.png" alt="Audit Playbook course badge" />
+            <span class="status planned">Course space ready</span>
+          </div>
+          <div class="course-body">
+            <p class="category">AUDIT READINESS</p>
+            <h3>Audit Playbook</h3>
+            <p>Organize workpapers, review documentation, and build a repeatable approach to audit-ready files.</p>
+            <div class="course-meta"><span>Curriculum upcoming</span><span>0% started</span></div>
+            <button class="course-button secondary" type="button" disabled>Coming soon</button>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-image">
+            <img src="assets/schedule-c-reconstruction.png" alt="Schedule C Reconstruction course badge" />
+            <span class="status planned">Course space ready</span>
+          </div>
+          <div class="course-body">
+            <p class="category">TAX PREPARATION</p>
+            <h3>Schedule C Reconstruction</h3>
+            <p>Learn an organized process for reconstructing business income and expenses when records are incomplete.</p>
+            <div class="course-meta"><span>Curriculum upcoming</span><span>0% started</span></div>
+            <button class="course-button secondary" type="button" disabled>Coming soon</button>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-image">
+            <img src="assets/irs-fine-defense.png" alt="IRS Fine Defense course badge" />
+            <span class="status planned">Course space ready</span>
+          </div>
+          <div class="course-body">
+            <p class="category">IRS COMPLIANCE</p>
+            <h3>IRS Fine Defense</h3>
+            <p>Understand penalty notices, response workflows, documentation, and defensible resolution strategies.</p>
+            <div class="course-meta"><span>Curriculum upcoming</span><span>0% started</span></div>
+            <button class="course-button secondary" type="button" disabled>Coming soon</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="academy-roadmap" id="learning-path" aria-labelledby="roadmap-title">
+      <div><p class="eyebrow">YOUR LEARNING PATH</p><h2 id="roadmap-title">One Academy. Multiple areas of mastery.</h2></div>
+      <p>Each course keeps its own missions, progress, downloads, quizzes, XP, badges, and completion certificate.</p>
+    </section>
+  </main>
+
+  <footer id="achievements">
+    <img src="assets/tax-compliance-pro-logo-dark.webp" alt="Tax Compliance Pro" />
+    <p>Atlas Academy · Learn. Apply. Advance.</p>
+  </footer>
+  <script src="catalog.js"></script>
+</body>
+</html>

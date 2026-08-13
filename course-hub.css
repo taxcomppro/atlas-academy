@@ -1,0 +1,127 @@
+﻿:root{--navy:#07182d;--navy2:#0b2f51;--blue:#239bd6;--gold:#ddb548;--green:#27ae60;--ink:#10233d;--muted:#718398;--line:#dde7ef;--surface:#fff;--bg:#edf3f7;--shadow:0 18px 46px rgba(8,31,58,.11)}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif;display:grid;grid-template-columns:270px minmax(0,1fr);min-height:100vh}
+a{color:inherit}
+.course-sidebar{height:100vh;position:sticky;top:0;display:flex;flex-direction:column;padding:22px 18px;background:linear-gradient(180deg,var(--navy),#0b2949);color:#fff}
+.course-logo{display:block;width:180px;height:132px;margin:0 auto 14px}
+.course-logo img{width:100%;height:100%;object-fit:contain}
+.course-sidebar nav{display:grid;gap:6px}
+.course-sidebar nav a{display:flex;align-items:center;gap:12px;padding:12px 13px;border-radius:11px;color:#b7c8d8;text-decoration:none;font-size:13px;font-weight:750}
+.course-sidebar nav a:hover,.course-sidebar nav a.active{color:#fff;background:rgba(255,255,255,.08)}
+.course-sidebar nav a.active{box-shadow:inset 3px 0 0 var(--gold)}
+.course-sidebar nav span{width:22px;text-align:center}
+.course-sidebar .back-link{margin-bottom:6px;border:1px solid rgba(255,255,255,.1)}
+.academy-status{margin-top:auto;padding:15px;border:1px solid rgba(255,255,255,.11);border-radius:15px;background:rgba(255,255,255,.05)}
+.academy-status p,.topbar p,.panel-heading p,.atlas-note p,.course-resources>p:first-child{margin:0 0 6px;font-size:9px;font-weight:800;letter-spacing:.14em;color:#72c9f1}
+.academy-status strong,.academy-status span{display:block}
+.academy-status strong{font-size:13px}
+.academy-status span{margin:6px 0 11px;color:#9fb3c7;font-size:10px;line-height:1.5}
+.academy-status a{font-size:11px;font-weight:800;color:#fff}
+.academy-status.complete{border-color:rgba(83,211,133,.45)}
+.academy-status.complete p{color:#72e7a1}
+.tcp-logo{width:135px;max-height:44px;object-fit:contain;margin:18px auto 0}
+.topbar{height:90px;display:flex;align-items:center;justify-content:space-between;padding:0 34px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.topbar p{color:#718aa2}
+.topbar h1{margin:0;font:800 29px "League Spartan",sans-serif}
+.profile{display:flex;align-items:center;gap:10px}
+.profile>span{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:var(--navy);color:#fff;font-weight:800}
+.profile strong,.profile small{display:block}
+.profile small{font-size:10px;color:var(--muted);margin-top:2px}
+.content{max-width:1400px;margin:0 auto;padding:28px 34px 50px}
+.course-hero{min-height:350px;display:grid;grid-template-columns:1.35fr .75fr;align-items:center;gap:22px;padding:42px 48px;overflow:hidden;border-radius:26px;color:#fff;background:radial-gradient(circle at 82% 35%,rgba(57,173,228,.3),transparent 27%),linear-gradient(125deg,var(--navy),#0c365c);box-shadow:var(--shadow)}
+.hero-copy{position:relative;z-index:2}
+.ready-pill{display:inline-block;padding:8px 11px;border:1px solid rgba(255,255,255,.17);border-radius:999px;background:rgba(255,255,255,.08);font-size:10px;font-weight:800;letter-spacing:.11em}
+.course-hero h2{max-width:720px;margin:22px 0 12px;font:800 clamp(38px,4.5vw,62px)/.98 "League Spartan",sans-serif}
+.course-hero p{max-width:690px;color:#c3d6e7;line-height:1.7}
+.course-hero img{width:100%;max-height:285px;object-fit:contain;filter:drop-shadow(0 18px 26px rgba(0,0,0,.35))}
+.primary-action{display:inline-flex;margin-top:14px;padding:13px 17px;border-radius:11px;color:#2c260e;background:linear-gradient(135deg,var(--gold),#f3d66f);text-decoration:none;font-weight:800}
+.dashboard-grid,.start-grid{display:grid;grid-template-columns:1.3fr .8fr;gap:20px;margin-top:20px}
+.panel{padding:25px;border:1px solid var(--line);border-radius:21px;background:var(--surface);box-shadow:var(--shadow)}
+.panel-heading{display:flex;align-items:start;justify-content:space-between;gap:16px}
+.panel-heading p{color:#7d91a5}
+.panel-heading h3,.atlas-note h3,.course-resources h3{margin:4px 0 0;font:800 25px "League Spartan",sans-serif}
+.panel-heading>strong{font:800 34px "Space Grotesk",sans-serif;color:var(--blue)}
+.track{height:9px;margin:24px 0 10px;overflow:hidden;border-radius:999px;background:#e5edf4}
+.track span{display:block;width:0;height:100%;background:var(--blue)}
+.progress-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}
+.atlas-note{display:flex;align-items:center;gap:17px;background:linear-gradient(135deg,#f8fcff,#edf8fd)}
+.atlas-a{width:58px;height:58px;flex:0 0 auto;display:grid;place-items:center;border-radius:19px;color:#fff;background:linear-gradient(135deg,#1ca5e2,#0c5d91);font:800 25px "Space Grotesk",sans-serif}
+.atlas-note h3{font-size:20px;line-height:1.25}
+.start-grid{grid-template-columns:1fr 330px}
+.status-pill{padding:7px 10px;border-radius:999px;color:#8a6715;background:#fff4cf;font-size:9px;font-weight:800}
+.description{color:var(--muted);line-height:1.65}
+.outcomes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0}
+.outcomes div{padding:14px;border-radius:13px;background:#f3f7fa}
+.outcomes span{display:inline-grid;place-items:center;width:27px;height:27px;margin-right:7px;border-radius:8px;background:var(--blue);color:#fff;font-size:10px;font-weight:800}
+.outcomes strong{font-size:12px}
+.start-card button{width:100%;padding:13px;border:0;border-radius:11px;color:#8091a2;background:#e8eef3;font-weight:800}
+.start-lesson-action{display:block;width:100%;padding:13px;border-radius:11px;color:#fff;background:var(--navy);font-weight:800;text-align:center;text-decoration:none}
+.status-pill.complete{color:#147342;background:#e3f7eb}
+.course-resources{display:flex;flex-direction:column}
+.course-resources>p:not(:first-child){color:var(--muted);font-size:12px;line-height:1.6}
+.course-resources a{display:flex;justify-content:space-between;margin-top:auto;padding:13px;border-radius:11px;color:#fff;background:var(--navy);text-decoration:none;font-size:12px;font-weight:800}
+.course-resources a span{color:#73cef5}
+.course-resources .secondary-download{margin-top:9px;background:#edf4f8;color:var(--navy)}
+.course-resources .secondary-download span{color:var(--blue)}
+.roadmap{margin-top:20px}
+.phase-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+.phase-grid article{padding:17px;border:1px solid var(--line);border-radius:14px;background:#f7fafc}
+.phase-grid article.current{border-color:#8fd2ee;background:#eefaff}
+.phase-grid span{color:var(--blue);font-size:9px;font-weight:800;letter-spacing:.11em}
+.phase-grid h4{margin:7px 0 4px}
+.phase-grid p{margin:0;color:var(--muted);font-size:11px;line-height:1.45}
+.roadmap-intro{margin:8px 0 0;color:var(--muted);font-size:12px;line-height:1.6}
+.mission-roadmap{display:grid;gap:18px;margin-top:22px}
+.roadmap-phase{overflow:hidden;border:1px solid var(--line);border-radius:17px;background:#f8fafc}
+.roadmap-phase>header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 20px;background:linear-gradient(135deg,var(--navy),#113e67);color:#fff}
+.roadmap-phase>header span{color:#6dd0f6;font-size:9px;font-weight:800;letter-spacing:.13em}
+.roadmap-phase>header h4{margin:4px 0 0;font:800 23px "League Spartan",sans-serif}
+.roadmap-phase>header p{max-width:500px;margin:0;color:#c6d8e8;font-size:11px;line-height:1.5;text-align:right}
+.day-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line)}
+.day-card{min-width:0;display:grid;grid-template-columns:56px minmax(0,1fr) auto;align-items:start;gap:12px;padding:16px;background:#fff}
+.day-card[href]{color:inherit;text-decoration:none;transition:transform .18s,box-shadow .18s}
+.day-card[href]:hover{position:relative;z-index:2;transform:translateY(-2px);box-shadow:0 10px 24px rgba(8,31,58,.13)}
+.day-number{color:var(--muted);font-size:8px;font-weight:800;letter-spacing:.1em;text-align:center}
+.day-number strong{display:block;color:var(--navy);font:800 24px "Space Grotesk",sans-serif;letter-spacing:0}
+.day-card h5{margin:0 0 4px;font-size:13px;color:var(--navy)}
+.day-card p{margin:0;color:var(--muted);font-size:10px;line-height:1.45}
+.day-card>span{padding:5px 7px;border-radius:999px;background:#edf1f4;color:#8291a0;font-size:8px;font-weight:800;text-transform:uppercase}
+.day-card.ready{box-shadow:inset 4px 0 0 var(--blue)}
+.day-card.ready>span{color:#0878b7;background:#e6f7ff}
+.day-card.complete{box-shadow:inset 4px 0 0 var(--green);background:#f8fdf9}
+.day-card.complete>span{color:#167b46;background:#e5f7eb}
+.day-card.upcoming{box-shadow:inset 4px 0 0 var(--gold)}
+.day-card.upcoming>span{color:#876514;background:#fff4cf}
+
+@media(max-width:1050px){body{grid-template-columns:1fr}
+.course-sidebar{height:auto;position:static;display:grid;grid-template-columns:120px 1fr;padding:12px 18px}
+.course-logo{width:110px;height:72px;margin:0}
+.course-sidebar nav{display:flex;align-items:center;overflow:auto}
+.course-sidebar nav a{white-space:nowrap}
+.academy-status,.tcp-logo{display:none}
+.course-hero{grid-template-columns:1fr .45fr}
+.start-grid{grid-template-columns:1fr}
+.course-resources{min-height:220px}
+}
+
+@media(max-width:720px){.course-sidebar{grid-template-columns:1fr}
+.course-logo{margin:auto}
+.course-sidebar nav a:not(.back-link):not(.active){display:none}
+.course-sidebar nav{justify-content:center}
+.topbar{height:78px;padding:0 16px}
+.content{padding:16px 12px 36px}
+.course-hero{grid-template-columns:1fr;padding:28px 23px;text-align:center}
+.course-hero img{max-height:210px;order:-1}
+.course-hero h2{font-size:41px}
+.dashboard-grid,.phase-grid{grid-template-columns:1fr}
+.outcomes{grid-template-columns:1fr}
+.progress-meta{gap:8px;flex-direction:column}
+.profile div{display:none}
+.day-grid{grid-template-columns:1fr}
+.roadmap-phase>header{align-items:flex-start;flex-direction:column}
+.roadmap-phase>header p{text-align:left}
+.day-card{grid-template-columns:48px minmax(0,1fr)}
+.day-card>span{grid-column:2;justify-self:start}
+}

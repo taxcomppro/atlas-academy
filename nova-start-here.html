@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#07182d" />
+  <meta name="description" content="Start Here with Nova for the 30 Day Tax Office Launch course." />
+  <title>Your 30-Day Launch Mission | Atlas Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=League+Spartan:wght@600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="course-hub.css" />
+  <link rel="stylesheet" href="nova-start-here.css" />
+</head>
+<body class="lesson-body">
+  <aside class="course-sidebar">
+    <a class="course-logo" href="index.html" aria-label="Atlas Academy courses"><img src="assets/Atlas_Academy_Logo.png" alt="Atlas Academy" /></a>
+    <nav aria-label="Lesson navigation">
+      <a class="back-link" href="30-day-tax-office-launch.html"><span>&larr;</span> Course Mission Control</a>
+      <a class="active" href="#briefing"><span>01</span> Nova Briefing</a>
+      <a href="#planPanel" data-open-tab="planPanel"><span>02</span> Launch Plan</a>
+      <a href="#toolkitPanel" data-open-tab="toolkitPanel"><span>03</span> Toolkit Map</a>
+      <a href="#checkpoint"><span>04</span> Checkpoint</a>
+    </nav>
+    <div class="instructor-card">
+      <div class="nova-avatar"><img src="assets/Nova_Talia_Profile.jpg" alt="Nova Grant" /></div>
+      <div><p>COURSE INSTRUCTOR</p><strong>Nova Grant</strong><span>Launch Commander</span></div>
+    </div>
+    <img class="tcp-logo" src="assets/tax-compliance-pro-logo-dark.webp" alt="Tax Compliance Pro" />
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div><p>START HERE WITH NOVA</p><h1>30 Day Tax Office Launch</h1></div>
+      <div class="lesson-progress"><span id="headerProgress">0 of 4 complete</span><div><i id="headerProgressBar"></i></div></div>
+    </header>
+
+    <div class="lesson-content">
+      <section class="nova-hero" id="briefing">
+        <div>
+          <span class="ready-pill">START HERE WITH NOVA</span>
+          <h2>Your 30-Day Launch Mission</h2>
+          <p>Nova will turn the 30 Day Tax Office Launch Toolkit into one focused action each day, so you finish with an operational, compliant, client-ready tax office.</p>
+          <div class="source-lock"><strong>CURRICULUM SOURCE</strong><span>30 Day Tax Office Launch Toolkit - verified and loaded</span></div>
+        </div>
+        <div class="nova-visual" aria-label="Nova Grant, Launch Commander"><div class="orbit one"></div><div class="orbit two"></div><div class="nova-core"><img src="assets/Nova_Talia_Profile.jpg" alt="Nova Grant" /></div><span>NOVA GRANT</span><small>LAUNCH COMMANDER</small></div>
+      </section>
+
+      <div class="lesson-grid">
+        <article class="lesson-main">
+          <div class="lesson-tabs" role="tablist" aria-label="Start Here sections">
+            <button class="active" data-tab="briefingPanel">Briefing</button>
+            <button data-tab="planPanel">My Launch Plan</button>
+            <button data-tab="toolkitPanel">Toolkit Roadmap</button>
+            <button data-tab="quizPanel">Checkpoint</button>
+          </div>
+
+          <section class="lesson-panel active" id="briefingPanel">
+            <div class="section-label">NOVA'S OPENING BRIEFING</div>
+            <h3>Build the office as a system</h3>
+            <p>Welcome to the 30 Day Tax Office Launch. Over the next 30 missions, we are not merely choosing a name or arranging a room. We are building a tax office that can operate with structure, consistency, professionalism, and documented compliance.</p>
+            <p>The toolkit explains that technical knowledge alone is not enough. A sustainable office also needs the right entity, registrations, banking, workspace, vendors, client workflow, staff expectations, documentation standards, and opening-day controls. Each mission will convert one part of that toolkit into a decision or completed action.</p>
+            <div class="briefing-promise"><strong>Your operating rhythm</strong><div><span>LEARN</span><span>DECIDE</span><span>BUILD</span><span>DOCUMENT</span></div></div>
+            <label class="review-check"><input type="checkbox" id="briefingReviewed" /> <span>I reviewed Nova's briefing and understand that this is an implementation course.</span></label>
+          </section>
+
+          <section class="lesson-panel" id="planPanel">
+            <div class="section-label">YOUR LAUNCH TARGET</div>
+            <h3>Make the mission specific</h3>
+            <p>Your answers are stored on this device and used to personalize your Mission Control progress.</p>
+            <div class="form-grid" id="launch-plan">
+              <label>Target opening date<input type="date" id="launchDate" /></label>
+              <label>Office model<select id="officeModel"><option value="">Choose one</option><option>Home-based</option><option>Virtual</option><option>Shared office</option><option>Storefront</option><option>Still deciding</option></select></label>
+              <label>Daily mission time<select id="dailyTime"><option value="">Choose one</option><option>30 minutes</option><option>45 minutes</option><option>60 minutes</option><option>90 minutes</option></select></label>
+              <label>Primary launch goal<input type="text" id="launchGoal" placeholder="Example: open a compliant storefront office" /></label>
+            </div>
+            <label class="field-block">Why does opening this office matter to you?<textarea id="launchWhy" placeholder="Describe the change you want this business to create..."></textarea></label>
+            <button class="lesson-action" id="savePlan">Save My Launch Plan</button><span class="save-status" id="planStatus">Not saved</span>
+          </section>
+
+          <section class="lesson-panel" id="toolkitPanel">
+            <div class="section-label">30-DAY TOOLKIT ROADMAP</div>
+            <h3>Four phases, one operating office</h3>
+            <div class="toolkit-phases" id="toolkit">
+              <div><span>PHASE 1</span><strong>Plan and Form</strong><p>Business structure, EIN, legal entity, banking, and records.</p></div>
+              <div><span>PHASE 2</span><strong>Register and Set Up</strong><p>PTIN, EFIN, office model, location, lease, supplies, and brand.</p></div>
+              <div><span>PHASE 3</span><strong>Systems and Compliance</strong><p>Software, bank products, due diligence, file defense, and controls.</p></div>
+              <div><span>PHASE 4</span><strong>Team and Launch</strong><p>Client workflow, hiring, training, readiness testing, and opening day.</p></div>
+            </div>
+            <div class="download-row"><a href="downloads/30-Day-Tax-Office-Launch-Toolkit.pdf" target="_blank" data-download="toolkit">Open Complete Toolkit <span>PDF</span></a><a href="downloads/M0-L01_30-Day_Mission_Tracker.pdf" target="_blank" data-download="tracker">Open Mission Tracker <span>PDF</span></a></div>
+          </section>
+
+          <section class="lesson-panel" id="quizPanel">
+            <div class="section-label">MISSION CHECKPOINT</div>
+            <h3>Confirm the launch standard</h3>
+            <form id="orientationQuiz" class="orientation-quiz">
+              <fieldset><legend>1. What is the purpose of this course?</legend><label><input type="radio" name="q1" value="a" /> Watch business videos without taking action</label><label><input type="radio" name="q1" value="b" /> Build an operational, compliant, client-ready tax office through daily implementation</label><label><input type="radio" name="q1" value="c" /> Replace official IRS and state requirements</label></fieldset>
+              <fieldset><legend>2. Which sequence describes the daily operating rhythm?</legend><label><input type="radio" name="q2" value="a" /> Learn, decide, build, document</label><label><input type="radio" name="q2" value="b" /> Watch, skip, rush, repeat</label><label><input type="radio" name="q2" value="c" /> Advertise before establishing systems</label></fieldset>
+              <fieldset><legend>3. What is the curriculum source for the 30 missions?</legend><label><input type="radio" name="q3" value="a" /> Random online suggestions</label><label><input type="radio" name="q3" value="b" /> The 30 Day Tax Office Launch Toolkit</label><label><input type="radio" name="q3" value="c" /> The Academy Welcome lessons</label></fieldset>
+              <button class="lesson-action" type="submit">Submit Checkpoint</button><span class="save-status" id="quizStatus">Not attempted</span>
+            </form>
+          </section>
+        </article>
+
+        <aside class="mission-checklist" id="checkpoint">
+          <p>START HERE CHECKLIST</p><h3>Unlock Day 1</h3>
+          <div class="check-list">
+            <div data-requirement="briefing"><i></i><span>Review Nova's briefing</span><b>Pending</b></div>
+            <div data-requirement="plan"><i></i><span>Save your launch plan</span><b>Pending</b></div>
+            <div data-requirement="downloads"><i></i><span>Open toolkit and tracker</span><b>0 of 2</b></div>
+            <div data-requirement="quiz"><i></i><span>Pass the checkpoint</span><b>Pending</b></div>
+          </div>
+          <button id="completeOrientation" disabled>Complete Start Here</button>
+          <small id="completionHelp">Complete all four requirements to unlock Day 1.</small>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div class="completion-modal" id="completionModal" hidden><div><div class="completion-mark">1</div><span>DAY 1 UNLOCKED</span><h2>Start Here Complete</h2><p>Your launch target is saved. Day 1: Choose Your Business Structure is now ready.</p><a href="30-day-tax-office-launch.html#roadmap">Return to Mission Control</a></div></div>
+  <script src="nova-start-here.js"></script>
+</body>
+</html>

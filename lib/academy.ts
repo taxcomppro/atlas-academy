@@ -1,0 +1,165 @@
+import { auth, currentUser } from "@clerk/nextjs/server";
+import { db } from "./db";
+export type AcademyProfile={id:string;clerk_user_id:string;tcp_user_id:string|null;email:string;full_name:string;role:"ERO"|"PREPARER"|"LEARNER"|"MANAGER"|"ADMIN"};
+
+export async function requireProfile(){
+  const {userId}=await auth(); if(!userId)throw new Error("UNAUTHENTICATED");
+  const clerk=await currentUser(); const email=clerk?.primaryEmailAddress?.emailAddress||""; const fullName=clerk?.fullName||clerk?.firstName||email.split("@")[0]||"Academy Member";
+  const sql=db(); const existingProfiles=await sql`SELECT * FROM academy_profiles WHERE clerk_user_id=${userId}` as AcademyProfile[];
+  let profile:AcademyProfile|undefined=existingProfiles[0];
+  if(!profile&&email){
+    const emailProfiles=await sql`SELECT * FROM academy_profiles WHERE lower(email)=lower(${email}) ORDER BY created_at LIMIT 1` as AcademyProfile[];
+    const emailProfile=emailProfiles[0];
+    if(emailProfile?.clerk_user_id.startsWith('tcp:')){
+      const linkedProfiles=await sql`UPDATE academy_profiles SET clerk_user_id=${userId},email=${email},full_name=${fullName},updated_at=now() WHERE id=${emailProfile.id} RETURNING *` as AcademyProfile[];
+      profile=linkedProfiles[0];
+    }
+  }
+  if(!profile){
+    const createdProfiles=await sql`INSERT INTO academy_profiles (clerk_user_id,email,full_name,role) VALUES (${userId},${email},${fullName},'LEARNER') RETURNING *` as AcademyProfile[];
+    profile=createdProfiles[0];
+    const [invite]=await sql`SELECT * FROM academy_invitations WHERE lower(email)=lower(${email}) AND status='SENT' AND expires_at>now() ORDER BY created_at DESC LIMIT 1`;
+    if(invite){
+      const inviteRole=invite.role==='MANAGER'?'MANAGER':'PREPARER';
+      await sql`UPDATE academy_profiles SET role=${inviteRole} WHERE id=${profile.id}`;
+      await sql`INSERT INTO academy_memberships (organization_id,profile_id,role,location_id) VALUES (${invite.organization_id},${profile.id},${inviteRole},${invite.location_id}) ON CONFLICT DO NOTHING`;
+      await sql`UPDATE academy_invitations SET status='ACCEPTED',accepted_at=now() WHERE id=${invite.id}`;
+      if(inviteRole==='PREPARER')await sql`UPDATE academy_assignments SET profile_id=${profile.id},status='REGISTERED' WHERE invitation_id=${invite.id}`;
+      profile.role=inviteRole;
+    }
+  }
+  return profile;
+}
+
+export async function getTrainingManagement(profile:AcademyProfile){
+  const sql=db();
+  const [membership]=await sql`SELECT m.*,o.name AS organization_name FROM academy_memberships m JOIN academy_organizations o ON o.id=m.organization_id WHERE m.profile_id=${profile.id} AND m.role IN ('ERO','MANAGER') LIMIT 1`;
+  if(!membership)throw new Error('ERO_ACCESS_REQUIRED');
+  const [locations,managers,assignments,versions,reminders]=await Promise.all([
+    sql`SELECT id,name,city,state,active,created_at FROM academy_locations WHERE organization_id=${membership.organization_id} ORDER BY name`,
+    sql`SELECT m.id,m.role,p.full_name,p.email,l.name AS location_name,m.joined_at FROM academy_memberships m JOIN academy_profiles p ON p.id=m.profile_id LEFT JOIN academy_locations l ON l.id=m.location_id WHERE m.organization_id=${membership.organization_id} AND m.role IN ('ERO','MANAGER') ORDER BY m.role,m.joined_at`,
+    sql`SELECT a.id,a.status,a.assigned_at,a.completed_at,i.full_name,i.email,p.title AS product_title,tv.version_key,l.name AS location_name,COALESCE(v.watched_percent,0) AS watched_percent,c.certificate_number FROM academy_assignments a JOIN academy_licenses lic ON lic.id=a.license_id JOIN academy_products p ON p.id=lic.product_id JOIN academy_training_versions tv ON tv.id=a.training_version_id LEFT JOIN academy_invitations i ON i.id=a.invitation_id LEFT JOIN academy_locations l ON l.id=a.location_id LEFT JOIN academy_video_progress v ON v.assignment_id=a.id LEFT JOIN academy_certificates c ON c.assignment_id=a.id WHERE lic.organization_id=${membership.organization_id} ORDER BY a.assigned_at DESC`,
+    sql`SELECT tv.id,tv.version_key,tv.title,tv.active,tv.created_at,p.title AS product_title,(SELECT count(*)::int FROM academy_assignments a WHERE a.training_version_id=tv.id) AS assignments FROM academy_training_versions tv JOIN academy_products p ON p.id=tv.product_id WHERE EXISTS (SELECT 1 FROM academy_licenses lic WHERE lic.organization_id=${membership.organization_id} AND lic.product_id=p.id) ORDER BY tv.created_at DESC`,
+    sql`SELECT r.id,r.status,r.scheduled_for,r.sent_at,i.full_name,i.email,p.title AS product_title FROM academy_reminders r JOIN academy_assignments a ON a.id=r.assignment_id JOIN academy_licenses lic ON lic.id=a.license_id JOIN academy_products p ON p.id=lic.product_id LEFT JOIN academy_invitations i ON i.id=a.invitation_id WHERE lic.organization_id=${membership.organization_id} ORDER BY r.scheduled_for DESC LIMIT 30`
+  ]);
+  return {membership,locations,managers,assignments,versions,reminders};
+}
+
+export async function getDashboard(profile:AcademyProfile){
+  const sql=db();
+  const [membership]=await sql`SELECT m.*,o.name AS organization_name,o.owner_profile_id,o.logo_url AS organization_logo_url FROM academy_memberships m JOIN academy_organizations o ON o.id=m.organization_id WHERE m.profile_id=${profile.id} ORDER BY m.joined_at LIMIT 1`;
+  if(!membership)return {profile,membership:null};
+  if(membership.role==='ERO'||membership.role==='MANAGER'){
+    const licenses=await sql`SELECT l.*,p.title,p.product_key,tv.id AS training_version_id,tv.title AS training_title,tv.version_key FROM academy_licenses l JOIN academy_products p ON p.id=l.product_id LEFT JOIN academy_training_versions tv ON tv.product_id=p.id AND tv.active=true WHERE l.organization_id=${membership.organization_id} AND l.status='ACTIVE' ORDER BY l.created_at DESC`;
+    const license=licenses[0];
+    const staff=licenses.length?await sql`SELECT a.id,a.status,a.assigned_at,a.completed_at,i.full_name,i.email,i.status AS invitation_status,p.title AS product_title,loc.name AS location_name,COALESCE(v.watched_percent,0) AS watched_percent,COALESCE((SELECT aa.score FROM academy_assessment_attempts aa WHERE aa.assignment_id=a.id AND aa.completed_at IS NOT NULL ORDER BY aa.attempt_number DESC LIMIT 1),0) AS score,(SELECT count(*)::int FROM academy_assessment_attempts aa WHERE aa.assignment_id=a.id AND aa.completed_at IS NOT NULL) AS attempts,CASE WHEN ack.id IS NULL THEN 'Pending' ELSE 'Signed' END AS acknowledgement_status,CASE WHEN c.id IS NULL THEN 'Pending' ELSE 'Issued' END AS certificate_status,c.certificate_number FROM academy_assignments a JOIN academy_licenses lic ON lic.id=a.license_id JOIN academy_products p ON p.id=lic.product_id LEFT JOIN academy_invitations i ON i.id=a.invitation_id LEFT JOIN academy_locations loc ON loc.id=a.location_id LEFT JOIN academy_video_progress v ON v.assignment_id=a.id LEFT JOIN academy_acknowledgements ack ON ack.assignment_id=a.id LEFT JOIN academy_certificates c ON c.assignment_id=a.id WHERE lic.organization_id=${membership.organization_id} ORDER BY a.assigned_at DESC`:[];
+    const catalog=await getOrganizationCatalog(membership.organization_id);
+    const locations=await sql`SELECT id,name,city,state FROM academy_locations WHERE organization_id=${membership.organization_id} AND active=true ORDER BY name`;
+    return {profile,membership,license,licenses,staff,catalog,locations};
+  }
+  const [assignment]=await sql`SELECT a.*,o.name AS organization_name,o.logo_url AS organization_logo_url,p.title AS product_title,tv.title AS training_title,tv.version_key,tv.pass_mark,tv.max_attempts,tv.required_watch_percent,tv.acknowledgement_text,COALESCE(v.watched_percent,0) AS watched_percent,COALESCE(v.position_seconds,0) AS position_seconds,ack.signed_at,c.certificate_number,c.issued_at FROM academy_assignments a JOIN academy_licenses l ON l.id=a.license_id JOIN academy_organizations o ON o.id=l.organization_id JOIN academy_products p ON p.id=l.product_id JOIN academy_training_versions tv ON tv.id=a.training_version_id LEFT JOIN academy_video_progress v ON v.assignment_id=a.id LEFT JOIN academy_acknowledgements ack ON ack.assignment_id=a.id LEFT JOIN academy_certificates c ON c.assignment_id=a.id WHERE a.profile_id=${profile.id} AND a.status!='ACCESS_REVOKED' ORDER BY a.assigned_at DESC LIMIT 1`;
+  const attempts=assignment?await sql`SELECT id,attempt_number,score,passed,started_at,completed_at FROM academy_assessment_attempts WHERE assignment_id=${assignment.id} ORDER BY attempt_number`:[];
+  return {profile,membership,assignment,attempts};
+}
+
+async function getOrganizationCatalog(organizationId:string){
+  const sql=db();
+  return sql`SELECT p.product_key,p.title,p.product_type,
+    (count(l.id) FILTER (WHERE l.status='ACTIVE') > 0) AS purchased,
+    COALESCE(sum(l.seats_purchased) FILTER (WHERE l.status='ACTIVE'),0)::int AS seats_purchased
+    FROM academy_products p
+    LEFT JOIN academy_licenses l ON l.product_id=p.id AND l.organization_id=${organizationId}
+    WHERE p.active=true
+    GROUP BY p.id,p.product_key,p.title,p.product_type
+    ORDER BY purchased DESC,p.title`;
+}
+
+export async function getCourseLibrary(profile:AcademyProfile){
+  const sql=db();
+  const [membership]=await sql`SELECT m.*,o.name AS organization_name FROM academy_memberships m JOIN academy_organizations o ON o.id=m.organization_id WHERE m.profile_id=${profile.id} ORDER BY m.joined_at LIMIT 1`;
+  if(!membership){
+    const products=await sql`SELECT product_key,title,product_type,false AS purchased,0::int AS seats_purchased FROM academy_products WHERE active=true ORDER BY title`;
+    return {membership:null,products};
+  }
+  return {membership,products:await getOrganizationCatalog(membership.organization_id)};
+}
+
+export async function getTrainingEcosystem(profile:AcademyProfile){
+  const sql=db();
+  const [membership]=await sql`SELECT m.*,o.name AS organization_name FROM academy_memberships m JOIN academy_organizations o ON o.id=m.organization_id WHERE m.profile_id=${profile.id} ORDER BY m.joined_at LIMIT 1`;
+  const products=membership
+    ? await sql`SELECT p.product_key,p.title,p.product_type,
+        EXISTS(SELECT 1 FROM academy_licenses lic WHERE lic.organization_id=${membership.organization_id} AND lic.product_id=p.id AND lic.status='ACTIVE') AS purchased,
+        tv.version_key,tv.title AS version_title,
+        CASE WHEN p.product_key='course:30-day-tax-office-launch' THEN 4 ELSE count(DISTINCT lm.id)::int END AS module_count,
+        CASE WHEN p.product_key='course:30-day-tax-office-launch' THEN 30 ELSE count(ll.id)::int END AS lesson_count,
+        CASE WHEN p.product_key='course:30-day-tax-office-launch' THEN 30 ELSE count(ll.id) FILTER (WHERE ll.lesson_type='EXERCISE')::int END AS exercise_count
+      FROM academy_products p
+      LEFT JOIN academy_training_versions tv ON tv.product_id=p.id AND tv.active=true
+      LEFT JOIN academy_learning_modules lm ON lm.training_version_id=tv.id
+      LEFT JOIN academy_learning_lessons ll ON ll.module_id=lm.id
+      WHERE p.active=true
+      GROUP BY p.id,p.product_key,p.title,p.product_type,tv.version_key,tv.title
+      ORDER BY purchased DESC,p.title`
+    : await sql`SELECT p.product_key,p.title,p.product_type,false AS purchased,tv.version_key,tv.title AS version_title,
+        CASE WHEN p.product_key='course:30-day-tax-office-launch' THEN 4 ELSE count(DISTINCT lm.id)::int END AS module_count,
+        CASE WHEN p.product_key='course:30-day-tax-office-launch' THEN 30 ELSE count(ll.id)::int END AS lesson_count,
+        CASE WHEN p.product_key='course:30-day-tax-office-launch' THEN 30 ELSE count(ll.id) FILTER (WHERE ll.lesson_type='EXERCISE')::int END AS exercise_count
+      FROM academy_products p
+      LEFT JOIN academy_training_versions tv ON tv.product_id=p.id AND tv.active=true
+      LEFT JOIN academy_learning_modules lm ON lm.training_version_id=tv.id
+      LEFT JOIN academy_learning_lessons ll ON ll.module_id=lm.id
+      WHERE p.active=true
+      GROUP BY p.id,p.product_key,p.title,p.product_type,tv.version_key,tv.title
+      ORDER BY p.title`;
+  const completedExercises=await sql`SELECT count(*)::int AS count FROM academy_exercise_submissions WHERE profile_id=${profile.id}`;
+  return {membership,products,completedExercises:completedExercises[0]?.count||0};
+}
+
+export async function getLearningPath(profile:AcademyProfile,productKey:string){
+  const sql=db();
+  const [membership]=await sql`SELECT m.*,o.name AS organization_name FROM academy_memberships m JOIN academy_organizations o ON o.id=m.organization_id WHERE m.profile_id=${profile.id} ORDER BY m.joined_at LIMIT 1`;
+  const [product]=await sql`SELECT p.id,p.product_key,p.title,p.product_type,tv.id AS training_version_id,tv.version_key,tv.title AS version_title
+    FROM academy_products p LEFT JOIN academy_training_versions tv ON tv.product_id=p.id AND tv.active=true
+    WHERE p.product_key=${productKey} AND p.active=true LIMIT 1`;
+  if(!product)return null;
+  const purchased=membership
+    ? Boolean((await sql`SELECT 1 FROM academy_licenses WHERE organization_id=${membership.organization_id} AND product_id=${product.id} AND status='ACTIVE' LIMIT 1`)[0])
+    : false;
+  const modules=product.training_version_id?await sql`SELECT lm.id,lm.title,lm.description,lm.position,
+      COALESCE(json_agg(json_build_object('id',ll.id,'title',ll.title,'lesson_type',ll.lesson_type,'duration_minutes',ll.duration_minutes,'position',ll.position,'completed',es.id IS NOT NULL) ORDER BY ll.position) FILTER (WHERE ll.id IS NOT NULL),'[]') AS lessons
+    FROM academy_learning_modules lm
+    LEFT JOIN academy_learning_lessons ll ON ll.module_id=lm.id
+    LEFT JOIN academy_exercise_submissions es ON es.lesson_id=ll.id AND es.profile_id=${profile.id}
+    WHERE lm.training_version_id=${product.training_version_id}
+    GROUP BY lm.id ORDER BY lm.position`:[];
+  return {membership,product:{...product,purchased},modules};
+}
+
+export async function getGuidedExercise(profile:AcademyProfile,lessonId:string){
+  const sql=db();
+  const [membership]=await sql`SELECT * FROM academy_memberships WHERE profile_id=${profile.id} ORDER BY joined_at LIMIT 1`;
+  const [exercise]=await sql`SELECT ll.id,ll.title,ll.content,p.id AS product_id,p.product_key,p.title AS product_title,lm.title AS module_title
+    FROM academy_learning_lessons ll
+    JOIN academy_learning_modules lm ON lm.id=ll.module_id
+    JOIN academy_training_versions tv ON tv.id=lm.training_version_id
+    JOIN academy_products p ON p.id=tv.product_id
+    WHERE ll.id=${lessonId} AND ll.lesson_type='EXERCISE' LIMIT 1`;
+  if(!exercise)return null;
+  const organizationAccess=membership?Boolean((await sql`SELECT 1 FROM academy_licenses WHERE organization_id=${membership.organization_id} AND product_id=${exercise.product_id} AND status='ACTIVE' LIMIT 1`)[0]):false;
+  const assignmentAccess=Boolean((await sql`SELECT 1 FROM academy_assignments a JOIN academy_licenses lic ON lic.id=a.license_id WHERE a.profile_id=${profile.id} AND lic.product_id=${exercise.product_id} AND a.status!='ACCESS_REVOKED' LIMIT 1`)[0]);
+  const [submission]=await sql`SELECT selected_option,correct,completed_at FROM academy_exercise_submissions WHERE lesson_id=${lessonId} AND profile_id=${profile.id}`;
+  return {...exercise,organization_id:membership?.organization_id||null,purchased:organizationAccess||assignmentAccess,submission};
+}
+
+export async function getLaunchCourse(profile:AcademyProfile){
+  const sql=db();
+  const [membership]=await sql`SELECT * FROM academy_memberships WHERE profile_id=${profile.id} ORDER BY joined_at LIMIT 1`;
+  const [product]=await sql`SELECT id,product_key,title FROM academy_products WHERE product_key='course:30-day-tax-office-launch' AND active=true LIMIT 1`;
+  if(!product)return null;
+  const organizationAccess=membership?Boolean((await sql`SELECT 1 FROM academy_licenses WHERE organization_id=${membership.organization_id} AND product_id=${product.id} AND status='ACTIVE' LIMIT 1`)[0]):false;
+  const assignmentAccess=Boolean((await sql`SELECT 1 FROM academy_assignments a JOIN academy_licenses lic ON lic.id=a.license_id WHERE a.profile_id=${profile.id} AND lic.product_id=${product.id} AND a.status!='ACCESS_REVOKED' LIMIT 1`)[0]);
+  const purchased=organizationAccess||assignmentAccess;
+  const progress=await sql`SELECT day_number,status,reflection,completed_at FROM academy_course_day_progress WHERE profile_id=${profile.id} AND product_id=${product.id} ORDER BY day_number`;
+  return {product,membership,purchased,progress};
+}

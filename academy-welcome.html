@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#07182d" />
+  <title>Academy Welcome | Atlas Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=League+Spartan:wght@600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="mission.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand-lockup">
+        <img class="academy-brand-logo" src="assets/Atlas_Academy_Logo.png" alt="Atlas Academy" />
+      </div>
+
+      <nav class="nav-list" aria-label="Primary navigation">
+        <a class="catalog-back" href="index.html"><span>←</span>Academy Home</a>
+        <button class="nav-item active" data-view="dashboard"><span>01</span>Welcome Home</button>
+        <button class="nav-item" data-view="course"><span>02</span>Course Player</button>
+        <button class="nav-item" data-view="downloads"><span>03</span>Downloads</button>
+        <button class="nav-item" data-view="badges"><span>04</span>Achievements</button>
+        <button class="nav-item" data-view="profile"><span>05</span>My Profile</button>
+      </nav>
+
+      <div class="sidebar-card">
+        <div class="mini-label">CURRENT STREAK</div>
+        <div class="streak-row"><span class="flame">0</span><strong>Start today</strong></div>
+        <div class="muted">Complete Welcome Mission 1 to begin.</div>
+      </div>
+
+      <div class="sidebar-footer">
+        <img src="assets/tax-compliance-pro-logo-dark.webp" alt="Tax Compliance Pro" />
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">Menu</button>
+        <div>
+          <div class="eyebrow">ONE-TIME STUDENT ONBOARDING</div>
+          <h1 id="pageTitle">Academy Welcome</h1>
+        </div>
+        <div class="top-actions">
+          <div class="profile-chip">
+            <div class="avatar">JL</div>
+            <div><strong>Jennifer</strong><span>Student</span></div>
+          </div>
+        </div>
+      </header>
+
+      <section class="view active" id="dashboardView">
+        <div class="hero-grid">
+          <article class="hero-card glass">
+            <div class="hero-copy">
+              <div class="status-pill"><span></span>WELCOME MISSION 1 READY</div>
+              <h2>Welcome to Atlas Academy.</h2>
+              <p>This one-time orientation introduces Atlas Academy, helps organize your learning workspace, and prepares you to move confidently between every course.</p>
+              <div class="hero-actions">
+                <button class="primary-btn" data-jump="course">Begin Welcome Mission 1</button>
+                <button class="secondary-btn" id="openAtlas">View Atlas Prompt</button>
+              </div>
+            </div>
+            <div class="atlas-orb" aria-label="Atlas visual">
+              <div class="orb-ring ring-one"></div>
+              <div class="orb-ring ring-two"></div>
+              <div class="orb-core">A</div>
+              <div class="floating-chip chip-a">WELCOME</div>
+              <div class="floating-chip chip-b" id="heroProgress">0% COMPLETE</div>
+              <div class="floating-chip chip-c" id="heroXp">100 XP AVAILABLE</div>
+            </div>
+          </article>
+
+          <article class="progress-card glass">
+            <div class="card-head"><div><div class="mini-label">WELCOME PROGRESS</div><h3 id="progressLabel">Orientation not started</h3></div><span class="percent" id="progressPercent">0%</span></div>
+            <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+            <div class="progress-meta"><span>Current: Academy Welcome</span><span id="missionCount">0 welcome missions complete</span></div>
+            <div class="week-grid">
+              <div class="week active"><span>1</span><strong>Welcome</strong><small>How the Academy works</small></div>
+              <div class="week"><span>2</span><strong>Meet Atlas</strong><small>Your learning guide</small></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="content-grid">
+          <article class="mission-card panel">
+            <div class="mission-top">
+              <div><div class="mini-label">CURRENT WELCOME MISSION</div><h3>W-L01 - Welcome to Atlas Academy</h3></div>
+              <div class="difficulty">DIFFICULTY <span>BEGINNER</span></div>
+            </div>
+            <p class="mission-desc">Understand how Atlas Academy works and commit to completing one mission at a time.</p>
+            <div class="deliverables dashboard-requirements">
+              <div data-state="video">Watch the Atlas welcome lesson <b>Pending</b></div>
+              <div data-state="downloads">Save the two Academy resources <b>0 of 2</b></div>
+              <div data-state="reflection">Complete the "Your Why" reflection <b>Pending</b></div>
+              <div data-state="atlas">Save your first Atlas response <b>Pending</b></div>
+              <div data-state="quiz">Pass the five-question quiz <b>Pending</b></div>
+            </div>
+            <div class="mission-footer">
+              <div class="time-block"><span>ESTIMATED TOTAL TIME</span><strong>20-30 minutes</strong></div>
+              <button class="complete-btn" data-jump="course">Open Mission</button>
+            </div>
+          </article>
+
+          <aside class="right-stack">
+            <article class="panel atlas-message">
+              <div class="atlas-mini">A</div>
+              <div><div class="mini-label">MESSAGE FROM ATLAS</div><p>"You do not need every answer today. You only need to take the next correct step."</p></div>
+            </article>
+            <article class="panel">
+              <div class="card-head"><div><div class="mini-label">TODAY'S RESOURCES</div><h3>Welcome downloads</h3></div><span>2 files</span></div>
+              <div class="resource-list">
+                <a class="resource-download" data-resource="workbook" href="downloads/M0-L01_Student_Workbook.pdf" target="_blank"><span>PDF</span><div><strong>Student Workbook</strong><small>Reflection and mission checklist</small></div><b>Open</b></a>
+                <a class="resource-download" data-resource="folder" href="downloads/M0-L01_Academy_Folder_Setup_Guide.pdf" target="_blank"><span>PDF</span><div><strong>Folder Setup Guide</strong><small>Organize course and business files</small></div><b>Open</b></a>
+              </div>
+            </article>
+          </aside>
+        </div>
+
+        <div class="bottom-grid">
+          <article class="panel">
+            <div class="card-head"><div><div class="mini-label">UP NEXT</div><h3>Academy Welcome</h3></div><button class="text-btn" data-jump="course">View welcome</button></div>
+            <div class="upcoming-list">
+              <div><span class="num">W2</span><div><strong>Meet Atlas, Your Guide</strong><small>Unlocks after Welcome Mission 1</small></div><span>Locked</span></div>
+              <div><span class="num">GO</span><div><strong>Choose Your Course</strong><small>Return to the Academy catalog after onboarding</small></div><span>Next</span></div>
+            </div>
+          </article>
+
+          <article class="panel achievements-preview">
+            <div class="card-head"><div><div class="mini-label">ACHIEVEMENTS</div><h3>Your first milestone</h3></div><span id="badgeStatus">Not started</span></div>
+            <div class="badge-row">
+              <div class="badge" id="atlasExplorerBadge"><div>A</div><strong>Atlas Explorer</strong><small>Complete Welcome Mission 1</small></div>
+              <div class="badge locked"><div>1</div><strong>Foundation</strong><small>Locked</small></div>
+              <div class="badge locked"><div>2</div><strong>IRS Ready</strong><small>Locked</small></div>
+              <div class="badge locked"><div>3</div><strong>Launch Ready</strong><small>Locked</small></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="courseView">
+        <div class="course-layout">
+          <aside class="course-nav panel">
+            <div class="mini-label">ACADEMY WELCOME</div>
+            <h3>One-Time Orientation</h3>
+            <div class="module-progress"><span id="moduleProgress" style="width:0%"></span></div>
+            <button class="lesson-link active">W1 Welcome to Atlas Academy <span>Play</span></button>
+            <button class="lesson-link" id="openLesson02" disabled>W2 Meet Atlas, Your Guide <span>Locked</span></button>
+          </aside>
+
+          <div class="player-area">
+            <div class="video-frame lesson-video-frame">
+              <video id="lessonVideo" controls preload="metadata" poster="assets/M0-L01_thumbnail.png">
+                <source src="assets/M0-L01_Atlas_Video.mp4" type="video/mp4" />
+                Your browser does not support HTML video.
+              </video>
+            </div>
+
+            <div class="player-tabs" role="tablist" aria-label="Lesson sections">
+              <button class="tab active" data-tab="mission">Mission</button>
+              <button class="tab" data-tab="resources">Downloads</button>
+              <button class="tab" data-tab="reflection">Reflection</button>
+              <button class="tab" data-tab="atlas">Ask Atlas</button>
+              <button class="tab" data-tab="quiz">Quiz</button>
+              <button class="tab" data-tab="notes">Notes</button>
+            </div>
+
+            <div class="tab-panel active" id="missionTab">
+              <h3>Today's Objective</h3>
+              <p>Understand what Atlas Academy helps you build and commit to one mission per day for the next 30 days.</p>
+              <div class="objective-grid"><div><span>1</span>Watch Atlas</div><div><span>2</span>Complete the work</div><div><span>3</span>Pass the quiz</div></div>
+              <div class="lesson-callout"><strong>Success looks like:</strong> reflection complete, Atlas response saved, quiz passed, and Welcome Mission 1 marked complete.</div>
+            </div>
+
+            <div class="tab-panel" id="resourcesTab">
+              <h3>Mission Downloads</h3>
+              <p>Open and save each resource. Mission Control records the download action on this device.</p>
+              <div class="resource-list">
+                <a class="resource-download" data-resource="workbook" href="downloads/M0-L01_Student_Workbook.pdf" target="_blank"><span>PDF</span><div><strong>Student Workbook</strong><small>Reflection and mission checklist</small></div><b>Open</b></a>
+                <a class="resource-download" data-resource="folder" href="downloads/M0-L01_Academy_Folder_Setup_Guide.pdf" target="_blank"><span>PDF</span><div><strong>Academy Folder Setup Guide</strong><small>Secure organization instructions</small></div><b>Open</b></a>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="reflectionTab">
+              <h3>Reflection: Your Why</h3>
+              <p>Why do you want to own a tax business, and what do you want your life or income to look like one year from now?</p>
+              <textarea id="reflectionArea" placeholder="Write at least a few sentences about your reason for starting..."></textarea>
+              <div class="save-row"><span id="reflectionSaved">Not saved</span><button class="primary-btn" id="saveReflection">Save Reflection</button></div>
+            </div>
+
+            <div class="tab-panel" id="atlasTab">
+              <h3>Your First Atlas Prompt</h3>
+              <div class="prompt-card"><strong>Copy this prompt</strong><p id="atlasPromptText">Atlas, help me define my long-term vision for owning a tax business. Ask me ten questions that will help clarify my goals.</p><button class="text-btn" id="copyPrompt">Copy Prompt</button></div>
+              <label class="field-label" for="atlasResponseArea">Save the helpful part of Atlas's response</label>
+              <textarea id="atlasResponseArea" placeholder="Paste or summarize your Atlas response here..."></textarea>
+              <div class="save-row"><span id="atlasSaved">Not saved</span><button class="primary-btn" id="saveAtlasResponse">Save Atlas Response</button></div>
+            </div>
+
+            <div class="tab-panel" id="quizTab">
+              <h3>Welcome Mission 1 Quiz</h3>
+              <p>Score at least 80% to complete this mission.</p>
+              <form id="quizForm" class="quiz-form">
+                <fieldset><legend>1. What is the primary purpose of Atlas Academy?</legend><label><input type="radio" name="q1" value="a"> Guide students through a structured process for launching a tax business</label><label><input type="radio" name="q1" value="b"> Replace professional tax software</label><label><input type="radio" name="q1" value="c"> Guarantee IRS approval</label></fieldset>
+                <fieldset><legend>2. How should students move through the Academy?</legend><label><input type="radio" name="q2" value="a"> Skip ahead</label><label><input type="radio" name="q2" value="b"> Complete one mission at a time</label><label><input type="radio" name="q2" value="c"> Only watch videos</label></fieldset>
+                <fieldset><legend>3. What distinguishes this Academy from a basic tax-preparation class?</legend><label><input type="radio" name="q3" value="a"> It focuses on building the business that prepares returns</label><label><input type="radio" name="q3" value="b"> It replaces official registrations</label><label><input type="radio" name="q3" value="c"> There is no difference</label></fieldset>
+                <fieldset><legend>4. What should you do if you feel overwhelmed?</legend><label><input type="radio" name="q4" value="a"> Return to today's mission and complete the next action</label><label><input type="radio" name="q4" value="b"> Quit and restart next year</label><label><input type="radio" name="q4" value="c"> Ignore the workbook</label></fieldset>
+                <fieldset><legend>5. Which tool supports prompts, planning, and guidance?</legend><label><input type="radio" name="q5" value="a"> Atlas AI</label><label><input type="radio" name="q5" value="b"> A bank portal</label><label><input type="radio" name="q5" value="c"> A refund calculator</label></fieldset>
+                <div class="save-row"><span id="quizResult">Not attempted</span><button class="primary-btn" type="submit">Submit Quiz</button></div>
+              </form>
+            </div>
+
+            <div class="tab-panel" id="notesTab">
+              <h3>Lesson Notes</h3>
+              <textarea id="notesArea" placeholder="Type your lesson notes here. They are saved on this device."></textarea>
+            </div>
+          </div>
+
+          <aside class="mission-panel panel">
+            <div class="mini-label">MISSION CHECKLIST</div>
+            <h3>Finish Welcome Mission 1</h3>
+            <div class="requirement-list">
+              <div data-state="video">Lesson watched <b>Pending</b></div>
+              <div data-state="downloads">Resources saved <b>0 of 3</b></div>
+              <div data-state="reflection">Reflection saved <b>Pending</b></div>
+              <div data-state="atlas">Atlas response saved <b>Pending</b></div>
+              <div data-state="quiz">Quiz passed <b>Pending</b></div>
+            </div>
+            <button class="primary-btn full" id="completeMission" disabled>Complete Mission</button>
+            <small class="completion-help" id="completionHelp">Complete all five requirements to unlock this button.</small>
+          </aside>
+        </div>
+      </section>
+
+      <section class="view" id="downloadsView">
+        <div class="placeholder panel">
+          <h2>Academy Welcome Downloads</h2>
+          <p>These student resources support the one-time Atlas Academy orientation.</p>
+          <div class="download-cards">
+            <a class="resource-download" data-resource="workbook" href="downloads/M0-L01_Student_Workbook.pdf" target="_blank"><strong>Student Workbook</strong><span>PDF</span></a>
+            <a class="resource-download" data-resource="folder" href="downloads/M0-L01_Academy_Folder_Setup_Guide.pdf" target="_blank"><strong>Academy Folder Setup Guide</strong><span>PDF</span></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="badgesView">
+        <div class="placeholder panel">
+          <h2>Achievements</h2>
+          <p>Complete Welcome Mission 1 to begin Atlas Explorer badge progress and earn your first 100 XP.</p>
+          <div class="large-badges"><div class="badge" id="atlasExplorerBadgeLarge"><div>A</div><strong>Atlas Explorer</strong><small id="atlasExplorerText">Not started</small></div><div class="badge locked"><div>1</div><strong>Business Builder</strong><small>Locked</small></div><div class="badge locked"><div>2</div><strong>IRS Ready</strong><small>Locked</small></div><div class="badge locked"><div>3</div><strong>Launch Ready</strong><small>Locked</small></div></div>
+        </div>
+      </section>
+
+      <section class="view" id="profileView">
+        <div class="placeholder panel">
+          <h2>My Profile</h2>
+          <p>Your local prototype progress, notes, and first achievement appear here.</p>
+          <div class="stats-grid"><div><strong id="profileMissions">0</strong><span>Missions Complete</span></div><div><strong id="profileXp">0</strong><span>XP Earned</span></div><div><strong id="profileBadges">0</strong><span>Badges Started</span></div><div><strong>0</strong><span>Day Streak</span></div></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal" id="atlasModal" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close" id="closeAtlas" aria-label="Close">x</button>
+      <div class="atlas-modal-head"><div class="atlas-mini big">A</div><div><div class="mini-label">ASK ATLAS</div><h2>Your first prompt</h2></div></div>
+      <p>Atlas, help me define my long-term vision for owning a tax business. Ask me ten questions that will help clarify my goals.</p>
+      <button class="primary-btn full" data-jump="course" id="goToAtlas">Open the Atlas exercise</button>
+    </div>
+  </div>
+
+  <div class="modal" id="completeModal" aria-hidden="true">
+    <div class="modal-card mission-complete-card">
+      <button class="modal-close" id="closeComplete" aria-label="Close">x</button>
+      <img src="assets/M0-L01_mission_complete_screen.png" alt="Mission complete - 100 XP" />
+      <h2>Welcome Mission 1 Complete</h2>
+      <p>You earned 100 XP, started Atlas Explorer badge progress, and unlocked Meet Atlas.</p>
+      <button class="primary-btn full" id="returnDashboard">Return to Mission Control</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Mission progress updated.</div>
+  <script src="academy-welcome.js"></script>
+</body>
+</html>
