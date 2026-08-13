@@ -1,4 +1,3 @@
-import { SignInButton, SignUpButton } from "@clerk/nextjs";
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 
@@ -46,17 +45,9 @@ export default async function Invite({
           <span>2. Return automatically to this Academy invitation</span>
           <span>{isManager ? "3. Open the Training Management dashboard" : "3. Begin the assigned product training"}</span>
         </div>
-        <p className="preview-only-copy">
-          Phase 1 preview: use the temporary buttons below to test this account
-          connection. They will be replaced by Tax Compliance Pro login.
-        </p>
         <div className="invite-actions">
-          <SignUpButton mode="modal">
-            <button className="gold">Create preview profile</button>
-          </SignUpButton>
-          <SignInButton mode="modal">
-            <button className="ghost">Preview sign in</button>
-          </SignInButton>
+          <a className="gold" href="https://www.taxcomppro.com/register?next=/academy-access">Create Tax Compliance Pro Profile</a>
+          <a className="ghost" href="https://www.taxcomppro.com/login?next=/academy-access">Sign In</a>
         </div>
       </div>
     </main>

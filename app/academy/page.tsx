@@ -1,4 +1,3 @@
-import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { getDashboard, requireProfile } from "@/lib/academy";
@@ -15,9 +14,7 @@ export default async function Academy() {
 
   return (
     <main className="academy-shell">
-      <div className="integration-notice">
-        Phase 1 preview login — final access will come from Tax Compliance Pro
-      </div>
+      <div className="integration-notice">Connected securely through Tax Compliance Pro</div>
       <header className="academy-nav">
         <Image
           src="/assets/Atlas_Academy_Logo.png"
@@ -41,10 +38,7 @@ export default async function Academy() {
             <b>{profile.full_name}</b>
             <small>{profile.role}</small>
           </span>
-          <UserButton
-            userProfileMode="navigation"
-            userProfileUrl="/academy/account"
-          />
+          <Link href="/api/auth/sign-out">Sign out</Link>
         </div>
       </header>
       {!data.membership ? (
@@ -64,9 +58,8 @@ function SetupCard() {
       <p className="eyebrow">PROFILE READY</p>
       <h1>Your Academy profile is connected.</h1>
       <p>
-        In the finished system, Tax Compliance Pro will create this connection
-        automatically after login or purchase. For this preview, create a sample
-        ERO Training Center.
+        Your Tax Compliance Pro profile is connected. Create your ERO Training
+        Center to begin managing products, seats, and staff training.
       </p>
       <form action="/api/academy/demo/setup" method="post">
         <button className="gold">Create sample Training Center</button>

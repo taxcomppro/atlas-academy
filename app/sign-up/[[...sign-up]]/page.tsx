@@ -1,1 +1,5 @@
-import {SignUp} from "@clerk/nextjs";export default function Page(){return <main className="auth-page"><SignUp/></main>}
+import { redirect } from "next/navigation";
+
+export default function Page() {
+  redirect("https://www.taxcomppro.com/register?next=/academy-access");
+}

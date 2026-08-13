@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Show, SignInButton } from "@clerk/nextjs";
+
+const academyAccessUrl = "https://www.taxcomppro.com/academy-access";
 
 const products = [
   {
@@ -53,12 +54,7 @@ export default function Home() {
         </nav>
         <div className="academy-landing-actions">
           <Link className="landing-text-link" href="https://www.taxcomppro.com/feed">Tax Compliance Pro</Link>
-          <Show when="signed-out">
-            <SignInButton mode="modal"><button className="academy-sign-in">Sign In</button></SignInButton>
-          </Show>
-          <Show when="signed-in">
-            <Link className="academy-sign-in" href="/academy">Enter Academy</Link>
-          </Show>
+          <Link className="academy-sign-in" href={academyAccessUrl}>Sign In</Link>
         </div>
       </header>
 
@@ -68,12 +64,7 @@ export default function Home() {
           <h1>Learn. Apply.<br/><em>Advance.</em></h1>
           <p>Build stronger tax-office systems, train your staff, and keep every purchased course and toolkit connected to one Academy profile.</p>
           <div className="landing-hero-actions">
-            <Show when="signed-out">
-              <SignInButton mode="modal"><button className="landing-primary">Sign In to Academy</button></SignInButton>
-            </Show>
-            <Show when="signed-in">
-              <Link className="landing-primary" href="/academy">Go to My Academy</Link>
-            </Show>
+            <Link className="landing-primary" href={academyAccessUrl}>Sign In to Academy</Link>
             <a className="landing-secondary" href="#products">Explore the Ecosystem</a>
           </div>
           <div className="landing-trust-row">
@@ -127,8 +118,7 @@ export default function Home() {
 
       <section className="landing-final-cta">
         <div><p className="landing-kicker">ALREADY A MEMBER?</p><h2>Your learning is ready when you are.</h2><p>Sign in to view purchased products, continue courses, and manage staff training.</p></div>
-        <Show when="signed-out"><SignInButton mode="modal"><button className="landing-primary">Sign In to Academy</button></SignInButton></Show>
-        <Show when="signed-in"><Link className="landing-primary" href="/academy">Enter Academy</Link></Show>
+        <Link className="landing-primary" href={academyAccessUrl}>Enter Academy</Link>
       </section>
 
       <footer className="academy-landing-footer">

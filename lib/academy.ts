@@ -1,22 +1,17 @@
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { cookies } from "next/headers";
 import { db } from "./db";
+import { verifyTcpToken } from "./tcp-session";
 export type AcademyProfile={id:string;clerk_user_id:string;tcp_user_id:string|null;email:string;full_name:string;role:"ERO"|"PREPARER"|"LEARNER"|"MANAGER"|"ADMIN"};
 
 export async function requireProfile(){
-  const {userId}=await auth(); if(!userId)throw new Error("UNAUTHENTICATED");
-  const clerk=await currentUser(); const email=clerk?.primaryEmailAddress?.emailAddress||""; const fullName=clerk?.fullName||clerk?.firstName||email.split("@")[0]||"Academy Member";
-  const sql=db(); const existingProfiles=await sql`SELECT * FROM academy_profiles WHERE clerk_user_id=${userId}` as AcademyProfile[];
+  const token=(await cookies()).get("atlas_tcp_session")?.value;
+  const identity=token?verifyTcpToken(token):null;
+  if(!identity)throw new Error("UNAUTHENTICATED");
+  const email=identity.email.trim().toLowerCase(),fullName=identity.fullName;
+  const sql=db(); const existingProfiles=await sql`SELECT * FROM academy_profiles WHERE tcp_user_id=${identity.tcpUserId} OR lower(email)=lower(${email}) ORDER BY CASE WHEN tcp_user_id=${identity.tcpUserId} THEN 0 ELSE 1 END LIMIT 1` as AcademyProfile[];
   let profile:AcademyProfile|undefined=existingProfiles[0];
-  if(!profile&&email){
-    const emailProfiles=await sql`SELECT * FROM academy_profiles WHERE lower(email)=lower(${email}) ORDER BY created_at LIMIT 1` as AcademyProfile[];
-    const emailProfile=emailProfiles[0];
-    if(emailProfile?.clerk_user_id.startsWith('tcp:')){
-      const linkedProfiles=await sql`UPDATE academy_profiles SET clerk_user_id=${userId},email=${email},full_name=${fullName},updated_at=now() WHERE id=${emailProfile.id} RETURNING *` as AcademyProfile[];
-      profile=linkedProfiles[0];
-    }
-  }
   if(!profile){
-    const createdProfiles=await sql`INSERT INTO academy_profiles (clerk_user_id,email,full_name,role) VALUES (${userId},${email},${fullName},'LEARNER') RETURNING *` as AcademyProfile[];
+    const createdProfiles=await sql`INSERT INTO academy_profiles (clerk_user_id,tcp_user_id,email,full_name,role) VALUES (${`tcp:${identity.tcpUserId}`},${identity.tcpUserId},${email},${fullName},'LEARNER') RETURNING *` as AcademyProfile[];
     profile=createdProfiles[0];
     const [invite]=await sql`SELECT * FROM academy_invitations WHERE lower(email)=lower(${email}) AND status='SENT' AND expires_at>now() ORDER BY created_at DESC LIMIT 1`;
     if(invite){
@@ -28,7 +23,7 @@ export async function requireProfile(){
       profile.role=inviteRole;
     }
   }
-  return profile;
+  return profile!;
 }
 
 export async function getTrainingManagement(profile:AcademyProfile){
