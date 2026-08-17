@@ -3,25 +3,28 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3003",
     "build": "next build",
-    "start": "next start",
-    "lint": "eslint .",
-    "db:migrate": "node --env-file=.env.local scripts/migrate.mjs",
-    "db:seed": "node --env-file=.env.local scripts/seed.mjs"
+    "start": "next start -p 3003",
+    "lint": "eslint ."
   },
   "dependencies": {
-    "@clerk/nextjs": "latest",
-    "@neondatabase/serverless": "latest",
+    "better-auth": "^1.2.7",
+    "@prisma/client": "^6.0.0",
+    "@prisma/adapter-pg": "^6.0.0",
+    "pg": "^8.13.1",
     "@vercel/blob": "^2.8.0",
-    "next": "latest",
-    "react": "latest",
-    "react-dom": "latest"
+    "lucide-react": "^0.525.0",
+    "next": "^15.3.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "@types/pg": "^8.11.10",
+    "prisma": "^6.0.0",
     "eslint": "latest",
     "eslint-config-next": "latest",
     "typescript": "latest"
